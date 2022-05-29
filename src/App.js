@@ -1,25 +1,56 @@
-import logo from './logo.svg';
+
 import './App.css';
+import {useState} from 'react'
+import './App.css';
+import Converter from './converter';
 
 function App() {
+  
+  const [amount, setAmount] = useState();
+  const [amountInFromCurrency, setAmountInFromCurrency] = useState(true);
+  
+  let toAmount, fromAmount
+  if(amountInFromCurrency)
+  {
+    fromAmount = amount
+    toAmount = (amount * 9/5) + 32;
+  }
+  else{
+    toAmount = amount
+    fromAmount = (amount - 32) * 5/9;
+  }
+  
+  function handleFromAmountChange(e){
+    setAmount(e.target.value)
+    setAmountInFromCurrency(true)
+  }
+  
+  function handleToAmountChange(e){
+  setAmount(e.target.value)
+  setAmountInFromCurrency(false)
+  }
+
   return (
+
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Temperature Converter</h1>
+      <h3>celsius</h3>
+      <Converter 
+      amount= {fromAmount}
+      onChangeAmount = {handleFromAmountChange}
+      />
+    
+      <h3>farenheit</h3>
+
+      <Converter
+      amount= {toAmount}
+      onChangeAmount = {handleToAmountChange}
+      />
     </div>
   );
+
+   
 }
 
 export default App;
